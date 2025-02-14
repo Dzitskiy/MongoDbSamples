@@ -1,31 +1,31 @@
 # MongoDbSamples
 
-Запуск MongoDB в контейнере:
+Р—Р°РїСѓСЃРє MongoDB РІ РєРѕРЅС‚РµР№РЅРµСЂРµ:
 ```
 cd .\MongoDbSamples\
 docker-compose up -d
 ```
-Перейти в контейнер с MongoDB:
+РџРµСЂРµР№С‚Рё РІ РєРѕРЅС‚РµР№РЅРµСЂ СЃ MongoDB:
 ```
 docker exec -it mongodb bash
 ```
-Откройте экземпляр командной оболочки MongoDB:
+РћС‚РєСЂРѕР№С‚Рµ СЌРєР·РµРјРїР»СЏСЂ РєРѕРјР°РЅРґРЅРѕР№ РѕР±РѕР»РѕС‡РєРё MongoDB:
 ```
 mongosh
 ```
-Создать база данных с именем BookStore:
+РЎРѕР·РґР°С‚СЊ Р±Р°Р·Р° РґР°РЅРЅС‹С… СЃ РёРјРµРЅРµРј BookStore:
 ```
 use BookStore
 ```
-Создать коллекцию Books:
+РЎРѕР·РґР°С‚СЊ РєРѕР»Р»РµРєС†РёСЋ Books:
 ```
 db.createCollection('Books')
 ```
-Определите схему для коллекции Books и вставить тестовые данные:
+РћРїСЂРµРґРµР»РёС‚Рµ СЃС…РµРјСѓ РґР»СЏ РєРѕР»Р»РµРєС†РёРё Books Рё РІСЃС‚Р°РІРёС‚СЊ С‚РµСЃС‚РѕРІС‹Рµ РґР°РЅРЅС‹Рµ:
 ```
 db.Books.insertMany([{ "Name": "Design Patterns", "Price": 54.93, "Category": "Computers", "Author": "Ralph Johnson" }, { "Name": "Clean Code", "Price": 43.15, "Category": "Computers","Author": "Robert C. Martin" }])
 ```
-Посмотреть результат:
+РџРѕСЃРјРѕС‚СЂРµС‚СЊ СЂРµР·СѓР»СЊС‚Р°С‚:
 ```
 db.Books.find().pretty()
 ```
