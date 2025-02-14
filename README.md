@@ -29,4 +29,3 @@ db.Books.insertMany([{ "Name": "Design Patterns", "Price": 54.93, "Category": "C
 ```
 db.Books.find().pretty()
 ```
-

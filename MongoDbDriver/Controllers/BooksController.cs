@@ -9,19 +9,19 @@ namespace MongoDbDriver.Controllers
     [Route("api/[controller]")]
     public class BooksController : ControllerBase
     {
-        private readonly BookRepository _booksService;
+        private readonly BookRepository _bookRepository;
 
         public BooksController(BookRepository booksService) =>
-            _booksService = booksService;
+            _bookRepository = booksService;
 
         [HttpGet]
         public async Task<List<Book>> Get() =>
-            await _booksService.GetAsync();
+            await _bookRepository.GetAsync();
 
         [HttpGet("{id:length(24)}")]
         public async Task<ActionResult<Book>> Get(string id)
         {
-            var book = await _booksService.GetAsync(id);
+            var book = await _bookRepository.GetAsync(id);
 
             if (book is null)
             {
@@ -34,7 +34,7 @@ namespace MongoDbDriver.Controllers
         [HttpPost]
         public async Task<IActionResult> Post(Book newBook)
         {
-            await _booksService.CreateAsync(newBook);
+            await _bookRepository.CreateAsync(newBook);
 
             return CreatedAtAction(nameof(Get), new { id = newBook.Id }, newBook);
         }
@@ -42,7 +42,7 @@ namespace MongoDbDriver.Controllers
         [HttpPut("{id:length(24)}")]
         public async Task<IActionResult> Update(string id, Book updatedBook)
         {
-            var book = await _booksService.GetAsync(id);
+            var book = await _bookRepository.GetAsync(id);
 
             if (book is null)
             {
@@ -51,7 +51,7 @@ namespace MongoDbDriver.Controllers
 
             updatedBook.Id = book.Id;
 
-            await _booksService.UpdateAsync(id, updatedBook);
+            await _bookRepository.UpdateAsync(id, updatedBook);
 
             return NoContent();
         }
@@ -59,14 +59,14 @@ namespace MongoDbDriver.Controllers
         [HttpDelete("{id:length(24)}")]
         public async Task<IActionResult> Delete(string id)
         {
-            var book = await _booksService.GetAsync(id);
+            var book = await _bookRepository.GetAsync(id);
 
             if (book is null)
             {
                 return NotFound();
             }
 
-            await _booksService.RemoveAsync(id);
+            await _bookRepository.RemoveAsync(id);
 
             return NoContent();
         }
