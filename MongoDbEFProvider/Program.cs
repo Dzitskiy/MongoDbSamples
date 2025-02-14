@@ -1,3 +1,8 @@
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using MongoDbEFProvider.DataAccess;
+using MongoDbEFProvider.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -6,6 +11,19 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.Configure<BookStoreDatabaseSettings>(
+    builder.Configuration.GetSection("BookStoreDatabase"));
+
+var databaseSettings = new BookStoreDatabaseSettings();
+builder.Configuration.GetSection("BookStoreDatabase").Bind(databaseSettings);
+
+builder.Services.AddDbContext<EfCoreMongoDbContext>(x => x
+    .EnableSensitiveDataLogging()
+    .LogTo(Console.WriteLine)
+    .UseMongoDB(databaseSettings.ConnectionString, databaseSettings.DatabaseName));
+
+builder.Services.AddScoped<BookRepository>();
 
 var app = builder.Build();
 
